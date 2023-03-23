@@ -12,15 +12,3 @@ with open('songCollection.json') as json_file_org:
     json_object = json.dumps(condensed, indent=4)
     with open('songCollection.json','w') as json_file_write:
         json_file_write.write(json_object)
-
-def addNewSong(name,artist,date):
-    with open('songCollection.json') as json_file_org:
-        condensed = json.load(json_file_org)
-        if name in condensed:
-            return -1
-        else:
-            condensed[name] = (artist,date)
-            json_object = json.dumps(condensed, indent=4)
-            with open('songCollection.json','w') as json_file_write:
-                json_file_write.write(json_object)
-            return 1
