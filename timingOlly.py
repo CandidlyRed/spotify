@@ -21,7 +21,9 @@ while True :
         while (name == 'null'):
             name,artist,time = randomChoose()
         
-        mopidy = MopidyClient()
+        mopidy = MopidyClient(
+            ws_url='ws://localhost:6680/mopidy/ws',
+            error_handler=on_server_error,)
         
         mopidy.tracklist.clear()
         # mopidy.tracklist.add(['yt:https://youtu.be/7PR3I23cd4I'])
@@ -34,3 +36,6 @@ while True :
         break
 
     if time.time() > start + PERIOD_OF_TIME : break
+
+def on_server_error(error):
+        print('[SERVER_ERROR] ', error, format='error')
