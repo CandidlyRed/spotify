@@ -23,8 +23,8 @@ while True :
         
         mopidy = MopidyClient()
         
-        mopidy.tracklist.add(uris="yt:https://youtu.be/7PR3I23cd4I")
-        mopidy.playback.play()
+        # mopidy.tracklist.add(uris="yt:https://youtu.be/7PR3I23cd4I")
+        # mopidy.playback.play()
 
         # while(mopidy.playback.get_state(timeout=5) != 'stopped'):
         #     time.sleep(5)
