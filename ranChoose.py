@@ -1,4 +1,3 @@
-# TODO: lookup on mopidy and run
 import json
 import random
   

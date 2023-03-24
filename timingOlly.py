@@ -3,6 +3,8 @@
 
 import time
 import random
+from ranChoose import randomChoose
+from mopidy_json_client import MopidyClient
 
 # figure out what terminal command to set up
 
@@ -11,10 +13,22 @@ start = time.time()
 PERIOD_OF_TIME = 50400 # 3600=1hr, this is currently set as 14 hours
 
 while True :
-    # time.sleep(600.0 - ((time.time() - start) % 600.0))
+    time.sleep(600.0 - ((time.time() - start) % 600.0))
     rand = random.randint(1,110)
-    print(rand)
     if rand == 1:
-        break # where action function exists
+        name,artist,time = randomChoose()
+        while (name == 'null'):
+            name,artist,time = randomChoose()
+        
+        mopidy = MopidyClient()
+        mopidy.connect()
+        
+        mopidy.tracklist.add(uris="yt:https://youtu.be/7PR3I23cd4I")
+        mopidy.playback.play()
+
+        while(mopidy.playback.get_state(timeout=5) != 'stopped'):
+            time.sleep(5)
+        mopidy.disconnect()
+        print("success")
 
     if time.time() > start + PERIOD_OF_TIME : break
