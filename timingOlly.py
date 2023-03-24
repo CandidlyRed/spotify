@@ -51,11 +51,10 @@ class MemoryBox():
 
     def bind_events(self):
         self.mopidy.bind_event('playback_state_changed', self.playback_state_changed)
-        self.mopidy.bind_event('stream_title_changed', self.stream_title_changed)
-        self.mopidy.bind_event('options_changed', self.options_changed)
-        self.mopidy.bind_event('volume_changed', self.volume_changed)
-        self.mopidy.bind_event('mute_changed', self.mute_changed)
-        self.mopidy.bind_event('seeked', self.seeked)
+
+    def playback_state_changed(self, old_state, new_state):
+        self.state = new_state
+        print_nice('> Playback state changed to ', self.state)
 
     def execute_command(self, command, args=[]):
         if (command == 'exit'):
