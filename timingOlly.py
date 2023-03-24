@@ -29,7 +29,7 @@ class MemoryBox():
     def on_server_error(self, error):
         print_nice('[SERVER_ERROR] ', error, format='error')
     
-    def on_connection(self.conn_state):
+    def on_connection(self,conn_state):
         if conn_state:
             # Initialize mopidy track and state
             self.state = self.mopidy.playback.get_state(timeout=5)
