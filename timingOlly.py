@@ -82,7 +82,7 @@ while True :
             name,artist,date = randomChoose()
 
         activate = MemoryBox()
-        time.sleep(10)
+        time.sleep(15)
         activate.execute_command("add")
         time.sleep(0.3)
         activate.execute_command("play")
