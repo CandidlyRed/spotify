@@ -26,6 +26,9 @@ class MemoryBox():
             retry_secs=10
         )
 
+        self.bind_events()
+        self.mopidy.connect()
+
     def on_server_error(self, error):
         print_nice('[SERVER_ERROR] ', error, format='error')
     
@@ -44,6 +47,29 @@ class MemoryBox():
         self.uri = track.get('uri') if track else None
         print_nice('> Current Track: ', track, format='track')
 
+    def bind_events(self):
+        self.mopidy.bind_event('playback_state_changed', self.playback_state_changed)
+        self.mopidy.bind_event('stream_title_changed', self.stream_title_changed)
+        self.mopidy.bind_event('options_changed', self.options_changed)
+        self.mopidy.bind_event('volume_changed', self.volume_changed)
+        self.mopidy.bind_event('mute_changed', self.mute_changed)
+        self.mopidy.bind_event('seeked', self.seeked)
+
+    def execute_command(self, command, args=[]):
+        if (command == 'exit'):
+            self.mopidy.disconnect()
+            time.sleep(0.2)
+            exit()
+        elif (command == 'play'):
+            if args:
+                if unicode(args[0]).isnumeric():
+                    self.mopidy.playback.play(tlid=int(args[0]))
+            else:
+                self.mopidy.playback.play()
+        elif (command == 'clear'):
+            self.mopidy.tracklist.clear()
+        elif (command == 'add'):
+            self.mopidy.tracklist.add(uris=['yt:https://youtu.be/7PR3I23cd4I'])
 
 while True :
     # time.sleep(600.0 - ((time.time() - start) % 600.0))
@@ -53,15 +79,14 @@ while True :
         name,artist,time = randomChoose()
         while (name == 'null'):
             name,artist,time = randomChoose()
-        print(name,artist,time)
-        
-        # mopidy.tracklist.clear()
-        # mopidy.tracklist.add(['yt:https://youtu.be/7PR3I23cd4I'])
-        # mopidy.playback.play()
 
-        # while(mopidy.playback.get_state(timeout=5) != 'stopped'):
-        #     time.sleep(5)
-        # mopidy.disconnect()
+        activate = MemoryBox()
+        time.sleep(0.3)
+        activate.execute_command("add")
+        time.sleep(0.3)
+        activate.execute_command("play")
+
+
         print("success")
         break
 
