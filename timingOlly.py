@@ -9,11 +9,13 @@ from mopidy_json_client.formatting import print_nice
 
 # figure out what terminal command to set up
 
+start = time.time()
+
 PERIOD_OF_TIME = 50400 # 3600=1hr, this is currently set as 14 hours
 
 class MemoryBox():
     def __init__(self):
-        self.start = time.time()
+        
         self.state = 'stopped'
         self.uri = None
 
