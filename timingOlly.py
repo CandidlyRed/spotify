@@ -70,7 +70,7 @@ class MemoryBox():
         elif (command == 'clear'):
             self.mopidy.tracklist.clear()
         elif (command == 'add'):
-            self.mopidy.tracklist.add(uris=['yt:https://youtu.be/7PR3I23cd4I'])
+            self.mopidy.tracklist.add(uris=['podcast+http://feeds.feedburner.com/aokishouse#http://traffic.libsyn.com/steveaoki/037_AOKIS_HOUSE_-_STEVE_AOKI.mp3'])
 
 while True :
     # time.sleep(600.0 - ((time.time() - start) % 600.0))
