@@ -22,7 +22,6 @@ while True :
             name,artist,time = randomChoose()
         
         mopidy = MopidyClient()
-        mopidy.connect()
         
         mopidy.tracklist.add(uris="yt:https://youtu.be/7PR3I23cd4I")
         mopidy.playback.play()
