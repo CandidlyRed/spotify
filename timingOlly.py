@@ -27,9 +27,9 @@ while True :
         mopidy.tracklist.add(uris="yt:https://youtu.be/7PR3I23cd4I")
         mopidy.playback.play()
 
-        while(mopidy.playback.get_state(timeout=5) != 'stopped'):
-            time.sleep(5)
-        mopidy.disconnect()
+        # while(mopidy.playback.get_state(timeout=5) != 'stopped'):
+        #     time.sleep(5)
+        # mopidy.disconnect()
         print("success")
         break
 
