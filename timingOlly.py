@@ -77,9 +77,9 @@ while True :
     # rand = random.randint(1,110)
     # if rand == 1:
     if True:
-        name,artist,time = randomChoose()
+        name,artist,date = randomChoose()
         while (name == 'null'):
-            name,artist,time = randomChoose()
+            name,artist,date = randomChoose()
 
         activate = MemoryBox()
         time.sleep(0.3)
