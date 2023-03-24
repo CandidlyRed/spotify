@@ -83,7 +83,7 @@ while True :
 
         activate = MemoryBox()
         time.sleep(15)
-        print("fk")
+        print(activate.state)
         activate.execute_command("add")
         time.sleep(0.3)
         activate.execute_command("play")
