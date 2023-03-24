@@ -13,9 +13,10 @@ start = time.time()
 PERIOD_OF_TIME = 50400 # 3600=1hr, this is currently set as 14 hours
 
 while True :
-    time.sleep(600.0 - ((time.time() - start) % 600.0))
-    rand = random.randint(1,110)
-    if rand == 1:
+    # time.sleep(600.0 - ((time.time() - start) % 600.0))
+    # rand = random.randint(1,110)
+    # if rand == 1:
+    if True:
         name,artist,time = randomChoose()
         while (name == 'null'):
             name,artist,time = randomChoose()
@@ -30,5 +31,6 @@ while True :
             time.sleep(5)
         mopidy.disconnect()
         print("success")
+        break
 
     if time.time() > start + PERIOD_OF_TIME : break
