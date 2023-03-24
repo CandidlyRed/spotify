@@ -21,8 +21,8 @@ class MemoryBox():
 
         self.mopidy = MopidyClient(
             ws_url='ws://localhost:6680/mopidy/ws',
-            error_handler=on_server_error,
-            connection_handler=on_connection,
+            error_handler=self.on_server_error,
+            connection_handler=self.on_connection,
             autoconnect=False,
             retry_max=10,
             retry_secs=10
