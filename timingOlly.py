@@ -22,9 +22,9 @@ while True :
             name,artist,date = randomChoose()
 
         client = MPDClient()
-        client.timeout = 10
+        client.timeout = 120
         client.idletimeout = None
-        client.connect("localhost", 10.0.235.71)
+        client.connect("localhost", )
         print(client.mpd_version)
         client.clear()
         client.add("yt:https://youtu.be/7PR3I23cd4I")
