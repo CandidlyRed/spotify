@@ -24,7 +24,7 @@ while True :
         client = MPDClient()
         client.timeout = 120
         client.idletimeout = 120
-        client.connect("raspberrypi", 6600)
+        client.connect("10.0.232.159", 6600)
         # print(client.mpd_version)
         # client.clear()
         # client.add("yt:https://youtu.be/7PR3I23cd4I")
