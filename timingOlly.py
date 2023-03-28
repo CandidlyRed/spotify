@@ -24,7 +24,7 @@ while True :
         client = MPDClient()
         client.timeout = 120
         client.idletimeout = None
-        client.connect("localhost", )
+        client.connect("localhost", 6600)
         print(client.mpd_version)
         client.clear()
         client.add("yt:https://youtu.be/7PR3I23cd4I")
