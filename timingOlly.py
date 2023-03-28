@@ -23,7 +23,7 @@ while True :
 
         client = MPDClient()
         client.timeout = 120
-        client.idletimeout = None
+        client.idletimeout = 120
         client.connect("localhost", 6600)
         # print(client.mpd_version)
         # client.clear()
