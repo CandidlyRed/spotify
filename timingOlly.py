@@ -21,7 +21,7 @@ class Window(QMainWindow):
         # set the title
         self.setWindowTitle("MemoryBox")
         # setting  the geometry of window
-        self.setGeometry(0, 0, 500, 200)
+        self.setGeometry(0, 50, 600, 100)
 
         self.timeLeft = QLabel("00:00")
         self.setCentralWidget(self.timeLeft)
