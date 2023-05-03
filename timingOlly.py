@@ -77,8 +77,8 @@ class Window(QMainWindow):
         now = datetime.now()
         current_time = int((now.strftime("%H:%M:%S"))[0:2])
         if (current_time >= 9) and (current_time <= 22): # active from hour 9 am to 10 pm
-            # rand = random.randint(1,50400) # about 6 times a week? (based on number of seconds)
-            rand = random.randint(1,10)
+            rand = random.randint(1,50400) # about 6 times a week? (based on number of seconds)
+            # rand = random.randint(1,10)
             if (rand == 1) and (self.isNotPlaying):
                 subprocess.Popen("./ytplayvlc " + "https://www.youtube.com/watch?v=dgD-Lakn8SA" + " 18",shell=True)
                 self.isNotPlaying = False
