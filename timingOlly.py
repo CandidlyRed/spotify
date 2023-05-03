@@ -136,7 +136,7 @@ class Window(QMainWindow):
         img = img.crop((width * .25, height * .15, width * .75, height * .85))
         img = img.resize((100, 100))
         img.save('/home/memorybox/Desktop/spotify/image_name.jpg')
-        self.image.setStyleSheet("background-image : url(image_name.jpg);border: 1px solid white;")
+        self.image.setStyleSheet("background-image : url(/home/memorybox/Desktop/spotify/image_name.jpg);border: 1px solid white;")
 
         subprocess.Popen("./ytplayvlc " + clip2 + " 18",shell=True)
 
