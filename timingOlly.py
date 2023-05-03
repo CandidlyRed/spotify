@@ -5,7 +5,9 @@ import random
 import sys
 import requests
 import re, requests, subprocess, urllib.parse, urllib.request
-# from bs4 import BeautifulSoup
+import json
+import urllib
+from datetime import datetime
 from ranChoose import randomChoose
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import * 
@@ -21,6 +23,7 @@ class Window(QMainWindow):
         super().__init__()
         self.isNotPlaying = True
         self.started = False
+        self.countDown = False
         self.start = 0
         self.counter = 0
         # set the title
@@ -36,7 +39,7 @@ class Window(QMainWindow):
         
         self.image = QLabel(self)
         self.image.setGeometry(190, 35, 100, 100)
-        self.image.setStyleSheet("background-image : url(whitescreen.jpg);border: 1px solid white;")
+        self.image.setStyleSheet("background-image : url(/home/memorybox/Desktop/spotify/whitescreen.jpg);border: 1px solid white;")
 
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.space)
@@ -64,35 +67,53 @@ class Window(QMainWindow):
     
     # action method
     def clickme(self):
-        if not self.isNotPlaying:
-            self.started = True
+        if (not self.isNotPlaying) and (not self.started):
+            self.countDown = False
             self.activePlayer()
             # printing pressed
-            print("pressed")
+            # print("pressed")
 
     def recurring_timer(self):
-        rand = random.randint(1,396000)
-        # if (rand == 1) and (self.isNotPlaying):
-        if self.isNotPlaying:
-            # subprocess.Popen("/Applications/mpv.app " + "https://www.youtube.com/watch?v=oZp83fMcdhU" + " --no-video",shell=True)
-            self.isNotPlaying = False
-            self.start = time.time()
-            self.authorTitle.setText("loading...")
-        elif (not self.isNotPlaying) and ((time.time() - self.start) > 60):
-            # subprocess.Popen("/Applications/mpv.app " + "end",shell=True)
-            self.isNotPlaying = True
-            self.counter = 0
-            self.timeLeft.setText("00:00")
-            self.authorTitle.setText("Memory - Box")
-            self.image.setStyleSheet("background-image : url(whitescreen.jpg);border: 1px solid white;")
-        elif self.started: #Check this might not work
-            self.counter += 1
-            minutes = str(self.counter // 60)
-            seconds = str(self.counter % 60)
-            analogTime = (minutes if (len(minutes) == 2) else ("0" + minutes)) + ":" + (seconds if (len(seconds) == 2) else ("0" + seconds))
-            self.timeLeft.setText(analogTime)
+        now = datetime.now()
+        current_time = int((now.strftime("%H:%M:%S"))[0:2])
+        if (current_time >= 9) and (current_time <= 22): # active from hour 9 am to 10 pm
+            # rand = random.randint(1,50400) # about 6 times a week? (based on number of seconds)
+            rand = random.randint(1,10)
+            if (rand == 1) and (self.isNotPlaying):
+                subprocess.Popen("./ytplayvlc " + "https://www.youtube.com/watch?v=dgD-Lakn8SA" + " 18",shell=True)
+                self.isNotPlaying = False
+                self.countDown = True
+                self.start = time.time()
+                self.authorTitle.setText("loading...")
+            elif (self.countDown) and (not self.started) and ((time.time() - self.start) > 150):
+                subprocess.Popen("killall vlc",shell=True)
+                self.isNotPlaying = True
+                self.countDown = False
+                self.started = False
+                self.counter = 0
+                self.timeLeft.setText("00:00")
+                self.authorTitle.setText("Memory - Box")
+                self.image.setStyleSheet("background-image : url(/home/memorybox/Desktop/spotify/whitescreen.jpg);border: 1px solid white;")
+            elif (not self.countDown) and (self.started) and ((time.time() - self.start) > 1000):
+                subprocess.Popen("killall vlc",shell=True)
+                self.isNotPlaying = True
+                self.countDown = False
+                self.started = False
+                self.counter = 0
+                self.timeLeft.setText("00:00")
+                self.authorTitle.setText("Memory - Box")
+                self.image.setStyleSheet("background-image : url(/home/memorybox/Desktop/spotify/whitescreen.jpg);border: 1px solid white;")
+            elif self.started:
+                self.counter += 1
+                minutes = str(self.counter // 60)
+                seconds = str(self.counter % 60)
+                analogTime = (minutes if (len(minutes) == 2) else ("0" + minutes)) + ":" + (seconds if (len(seconds) == 2) else ("0" + seconds))
+                self.timeLeft.setText(analogTime)
 
     def activePlayer(self):
+        self.started = True
+        self.start = time.time()
+        subprocess.Popen("killall vlc",shell=True)
         name,artist,date = randomChoose()
         while (name == 'null'):
             name,artist,date = randomChoose()
@@ -108,18 +129,16 @@ class Window(QMainWindow):
 
         img_url = "{}".format(search_results[0])
         img_data = requests.get("https://img.youtube.com/vi/" + img_url + "/hqdefault.jpg").content
-        with open('image_name.jpg', 'wb') as handler:
+        with open('/home/memorybox/Desktop/spotify/image_name.jpg', 'wb') as handler:
             handler.write(img_data)
-        img = Image.open('image_name.jpg')
+        img = Image.open('/home/memorybox/Desktop/spotify/image_name.jpg')
         width,height = img.size
         img = img.crop((width * .25, height * .15, width * .75, height * .85))
         img = img.resize((100, 100))
-        img.save('image_name.jpg')
+        img.save('/home/memorybox/Desktop/spotify/image_name.jpg')
         self.image.setStyleSheet("background-image : url(image_name.jpg);border: 1px solid white;")
 
-        # subprocess.Popen("/Applications/mpv.app " + clip2 + " --no-video",shell=True)
-        self.started = False
-        self.isNotPlaying = True
+        subprocess.Popen("./ytplayvlc " + clip2 + " 18",shell=True)
 
 
 App = QApplication(sys.argv)
