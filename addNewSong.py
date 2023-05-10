@@ -3,7 +3,7 @@ import json
 flag = True
 with open('/home/memorybox/Desktop/spotify/songCollection.json') as json_file_org:
     condensed = json.load(json_file_org)
-    possibleNew = input("insert new song via in the following form: name,artist,date (without spaces)\n")
+    possibleNew = input("insert new song via in the following form: name,artist,date (without spaces)\n").encode('utf-8').decode('unicode-escape')
     possibleArr = possibleNew.split(",")
     if possibleArr[0] in condensed:
         if condensed[possibleArr[0]][0] == possibleArr[1]:
