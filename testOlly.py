@@ -118,7 +118,7 @@ class Window(QMainWindow):
         while (name == 'null'):
             name,artist,date = randomChoose()
         
-        self.authorTitle.setText(artist + ": " + name + " - (" + date[:-10] + ")")
+        self.authorTitle.setText(artist + ": " + name + " - (" + date[:10] + ")")
         music_name = artist + " " + name
         query_string = urllib.parse.urlencode({"search_query": music_name})
         formatUrl = urllib.request.urlopen("https://www.youtube.com/results?" + query_string)
