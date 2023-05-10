@@ -13,6 +13,6 @@ with open('/home/memorybox/Desktop/spotify/songCollection.json') as json_file_or
         condensed[possibleArr[0]] = (possibleArr[1],possibleArr[2])
 
         json_object = json.dumps(condensed, indent=4)
-        with open('/home/memorybox/Desktop/spotify/songCollection.json','w') as json_file_write:
+        with open('/home/memorybox/Desktop/spotify/songCollection.json','w', encoding='utf-8') as json_file_write:
             json_file_write.write(json_object)
             print("Success")
